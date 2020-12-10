@@ -295,3 +295,7 @@ def outer_function(func):
 
 f = outer_function(add)
 f(10, 20)
+
+# module
+import module
+module.add(1, 4)
