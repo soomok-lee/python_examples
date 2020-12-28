@@ -17,11 +17,27 @@ def get_dir_list(dir):
     return str_list
 
 def get_weather(where):
+    weather = ""
+
     url = "https://search.naver.com/search/naver?query={}+날씨".format(where)
     r = requests.get(url)
     bs = BeautifulSoup(r.text, "lxml")
     w_box = bs.select("div.today_area > div.main_info")
 
-    print(w_box)
+    # print(w_box)
 
-get_weather("서울")
+    if len(w_box) > 0:
+        temperature = bs.select("span.todaytemp")
+        cast_text = bs.select("p.cast_txt")
+        indicator = bs.select("span.indicator")
+
+        if len(temperature) > 0 and len(cast_text) > 0 and len(indicator) > 0:
+            temperature = temperature[0].text.strip()
+            cast_text = cast_text[0].text.strip()
+            indicator = indicator[0].text.strip()
+            
+            weather = "{}\r\n{}\r\n{}".format(temperature, cast_text, indicator) 
+    return weather
+
+if __name__ == "__main__": # python module.py 시 실행
+    get_weather("서울")

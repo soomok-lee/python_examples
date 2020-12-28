@@ -29,6 +29,10 @@ def handler(msg):
                 else:
                     filelist = module.get_dir_list(filepath)
                     bot.sendMessage(chat_id, filelist)
+            elif command == "/weather":
+                w = " ".join(args)
+                weather = module.get_weather(w)
+                bot.sendMessage(chat_id, weather)
             elif command[0:4] == "/get":
                 filepath = " ".join(args)
                 if os.path.exists(filepath):
